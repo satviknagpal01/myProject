@@ -10,13 +10,11 @@ export default class Renderer{
         this.canvas = this.experience.canvas;
         this.camera = this.experience.camera;
 
-        //console.log(this.camera,this.camera.perspectiveCamera);
-
         this.setRenderer();
     }
 
     setRenderer(){
-        this.renderer = new THREE.WebGL1Renderer({
+        this.renderer = new THREE.WebGLRenderer({
             canvas: this.canvas,
             antialias: true,
         });
@@ -26,18 +24,14 @@ export default class Renderer{
         this.renderer.toneMappingExposure = 1.75;
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFShadowMap;
-        this.renderer.setSize = (this.sizes.width,this.sizes.height,false);
         
-        // try to fix this part
-        
-        this.renderer.setPixelRatio(this.sizes.pixelRatio);
-
-        //this much
+        this.renderer.setPixelRatio(10);
+        //this.renderer.setSize = (this.sizes.width,this.sizes.height);
     }
 
     resize(){
-        this.renderer.setSize = (this.sizes.width,this.sizes.height,false);
-        //this.renderer.setPixelRatio(this.sizes.pixelRatio);
+        this.renderer.setPixelRatio(10);
+        //this.renderer.setSize = (this.sizes.width,this.sizes.height);
     }
 
     update(){

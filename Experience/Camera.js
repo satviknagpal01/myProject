@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls"
 
 import Experience from "./Experience";
 
@@ -11,6 +12,7 @@ export default class Camera{
 
         this.createPerspectiveCamera();
         this.createOrthographicCamera();
+        this.setOrbitControls();
     }
 
     createPerspectiveCamera(){
@@ -20,8 +22,13 @@ export default class Camera{
             0.1,
             1000
             );
+        this.perspectiveCamera.position.x = 35.03;
+        this.perspectiveCamera.position.y = 12;
+        this.perspectiveCamera.position.z = 45;
+        this.perspectiveCamera.rotation.x = -0.37197;
+        this.perspectiveCamera.rotation.y = 0.3378;
+        this.perspectiveCamera.rotation.z = 0.12858;
         this.scene.add(this.perspectiveCamera);
-        this.perspectiveCamera.position.z = 5;
     }
     createOrthographicCamera(){
         this.frustrum = 5;
@@ -33,7 +40,23 @@ export default class Camera{
             -100,
             100
             );
-        this.scene.add(this.orthographicCamera)
+        this.scene.add(this.orthographicCamera);
+
+        this.helper = new THREE.CameraHelper(this.orthographicCamera);
+        this.scene.add(this.helper);
+
+        const size = 20;
+        const divisions = 20;
+        const gridhelper = new THREE.GridHelper(size,divisions);
+        this.scene.add(gridhelper);
+        const axesHelper = new THREE.AxesHelper(5);
+        this.scene.add(axesHelper);
+    }
+
+    setOrbitControls(){
+        this.controls = new OrbitControls(this.perspectiveCamera,this.canvas);
+        this.controls.enableDamping = true;
+        this.controls.enableZoom = true;
     }
 
     resize(){
@@ -49,5 +72,7 @@ export default class Camera{
         this.orthographicCamera.updateProjectionMatrix();
     }
 
-    update() {}
+    update() {
+        this.controls.update();
+    }
 }

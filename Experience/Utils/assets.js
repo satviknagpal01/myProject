@@ -1,7 +1,7 @@
 export default[
     {
-        name: "rocket",
+        name: "room",
         type: "glbModel",
-        path: "/models/Rocketship.glb",
+        path: "/models/low_poly_living_room.glb",
     }
 ]

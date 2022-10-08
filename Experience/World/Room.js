@@ -6,11 +6,27 @@ export default class Room{
     constructor(){
         this.experience = new Experience();
         this.scene = this.experience.scene;
+        this.resources = this.experience.resources;
+        this.room = this.resources.items.room;
+        this.actualRoom = this.room.scene;
+        this.setModel();
+    }
 
-        const geometry = new THREE.BoxGeometry(1,1,1);
-        const material = new THREE.MeshBasicMaterial({color:0xFF0000});
-        const cube = new THREE.Mesh(geometry,material);
-        this.scene.add(cube);
+    setModel(){
+        this.actualRoom.castShadow = true;
+        this.actualRoom.receiveShadow = true;
+
+        this.actualRoom.children.forEach(child => {
+            child.castShadow = true;
+            child.receiveShadow = true;
+
+            //console.log(child);
+        });
+
+
+        this.scene.add(this.actualRoom);
+
+        //console.log(this.actualRoom.position);
     }
 
 
